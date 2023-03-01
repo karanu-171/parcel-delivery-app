@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import bot from "../../images/bot.jpeg";
-import './auth.css'
+import "./auth.css";
+import { signUpUser } from "../features/user/userSlice";
+import { useSelector,useDispatch } from "react-redux";
+import { signUpUser, reset } from '../features/user/userSlice'
 
 function Register() {
   const [userName, setUserName] = useState("");
@@ -15,43 +18,44 @@ function Register() {
   const [uploadingImg, setUploadingImg] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
 
-  async function uploadImage() {
-    const data = new FormData();
-    data.append("file", image);
-    data.append("upload_preset", "chat-app");
-    try {
-      setUploadingImg(true);
-      let res = await fetch(
-        "https://api.cloudinary.com/v1_1/dixlprmle/image/upload",
-        {
-          method: "post",
-          body: data,
-        }
-      );
-      const urlData = await res.json();
-      setUploadingImg(false);
-      return urlData.url;
-    } catch (error) {
-      setUploadingImg(false);
-      console.log(error);
-    }
-  }
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user, loading, error} = useSelector(state => state.user);
 
-  const validateImg = (e) => {
-    const file = e.target.files[0];
-    if (file.size >= 1048576) {
-      return alert("Max file size is 1mb");
-    } else {
-      setImage(file);
-      setImagePreview(URL.createObjectURL(file));
+  useEffect(()=>{
+    if(error) {
+      toast.error(message)
     }
+    if(success || user) {
+      navigate('/')
+    }
+    dispatch(reset())
+
+  },[user, error, success, message, navigate, dispatch])
+
+  const profileChange = async (e) => {
+    const file = e.target.files[0];
+    set(file);
+    console.log(file);
   };
+
+  const set = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setProfile(reader.result);
+    };
+  };
+
   const handleSignup = async (e) => {
     e.preventDefault();
-    if (!image) return alert("Please upload your profile picture");
-    const url = await uploadImage(image);
-    console.log(url);
     //signup the user
+    if(password !== confirmPassword){
+      toast.error('passwords do not match')
+    }else {
+      const user = {picture, userName, email, phoneNumber, password}
+      dispatch(signUpUser(user));
+    }
   };
 
   return (
@@ -73,7 +77,6 @@ function Register() {
                 id="image-upload"
                 hidden
                 accept="image/png, image/jpeg"
-                onChange={validateImg}
               />
             </div>
             <Form.Group className="mb-3" controlId="formBasicEmail">

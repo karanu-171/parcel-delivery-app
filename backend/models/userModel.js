@@ -2,14 +2,8 @@ const mongoose = require('mongoose')
 
 const userSchema = mongoose.Schema({
   picture: {
-    public_id: {
-      type: String,
-      required: true,
-    },
-    url: {
-      type: String,
-      required: true,
-    },
+    type: String,
+    required: true,
   },
   userName: {
     type: String,

@@ -11,15 +11,12 @@ const registerUser = async (req,res) =>{
         if(existingUser){
             res.status(400).json({message: "user already exists"})
         }
-        const pic = await cloudinary.uploader.upload(picture, {
-            folder: users,
-        })
+        // const pic = await cloudinary.uploader.upload(picture, {
+        //     folder: users,
+        // })
 
             const user  = new User({
-                picture:{
-                    public_id: pic.public_id,
-                    url: pic.secure_url
-                },
+                picture,
                 userName,
                 email,
                 phoneNumber,
