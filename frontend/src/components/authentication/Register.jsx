@@ -3,20 +3,16 @@ import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import bot from "../../images/bot.jpeg";
 import "./auth.css";
-import { signUpUser } from "../features/user/userSlice";
 import { useSelector,useDispatch } from "react-redux";
-import { signUpUser, reset } from '../features/user/userSlice'
+import { registerUser, reset } from '../features/user/userSlice'
 
 function Register() {
+  const [picture, setPicture] = useState({ myFile: ""});
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
-  //image upload states
-  const [image, setImage] = useState(null);
-  const [uploadingImg, setUploadingImg] = useState(false);
-  const [imagePreview, setImagePreview] = useState(null);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -33,19 +29,27 @@ function Register() {
 
   },[user, error, success, message, navigate, dispatch])
 
-  const profileChange = async (e) => {
+  function convertToBase64(file){
+    return new Promise((resolve, reject) =>{
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file)
+      fileReader.onload(() => {
+        resolve(fileReader.result)
+      });
+      fileReader.onerror((error)=> {
+        reject(error)
+      })
+    })
+  }
+
+  const picChange = async (e) => {
     const file = e.target.files[0];
-    set(file);
-    console.log(file);
+    const base64 = await convertToBase64(file)
+    setPicture({ ...image, myFile: base64})
+    console.log(base64);
   };
 
-  const set = (file) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setProfile(reader.result);
-    };
-  };
+ 
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -54,7 +58,7 @@ function Register() {
       toast.error('passwords do not match')
     }else {
       const user = {picture, userName, email, phoneNumber, password}
-      dispatch(signUpUser(user));
+      dispatch(registerUser(user));
     }
   };
 
@@ -70,13 +74,14 @@ function Register() {
             <div className="signup-profile-pic__container">
               <img src={imagePreview || bot} className="signup-profile-pic" />
               <label htmlFor="image-upload" className="image-upload-label">
-                <i className="fas fa-plus-circle add-picture-icon"></i>
+                <img src="" alt=""/>
               </label>
               <input
                 type="file"
                 id="image-upload"
                 hidden
-                accept="image/png, image/jpeg"
+                accept='.jpeg, .png, .jpg'
+                onChange={e=> picChange(e)}
               />
             </div>
             <Form.Group className="mb-3" controlId="formBasicEmail">

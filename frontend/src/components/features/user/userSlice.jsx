@@ -11,7 +11,7 @@ const initialState = {
     message: ""
 }
 
-export const signUpUser = createAsyncThunk("signUpUser", async (user, thunkAPI) => {
+export const registerUser = createAsyncThunk("registerUser", async (user, thunkAPI) => {
   try {
     return await authService.register(user)
   } catch (error) {
@@ -21,18 +21,21 @@ export const signUpUser = createAsyncThunk("signUpUser", async (user, thunkAPI) 
   }
 });
 
-export const loginUser = createAsyncThunk("signUpUser", async (user, thunkAPI) => {
+export const loginUser = createAsyncThunk("loginUser", async (user, thunkAPI) => {
   try {
     return await authService.login(user);
   } catch (error) {
     const message =
-      (error.response && error.response.data && error.response.data.message) ||
-      error.message ||
-      error.toString();
+    (error.response && error.response.data && error.response.data.message) ||
+    error.message ||
+    error.toString();
     return thunkAPI.rejectWithValue(message);
   }
 });
 
+export const logout = createAsyncThunk("logout", async (user, thunkAPI) => {
+  await authService.logout()
+})
 
     
 
@@ -49,25 +52,25 @@ const userSlice = createSlice({
   },
   extraReducers: (builder)=> {
     builder
-    // signup user
-      .addCase(signUpUser.pending, (state)=>{
-        state.loading = true
+      // signup user
+      .addCase(registerUser.pending, (state) => {
+        state.loading = true;
       })
-      .addCase(signUpUser.fulfilled, (state, action)=>{
-        state.loading = false
-        state.success = true
-        state.user = action.payload
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.user = action.payload;
       })
-      .addCase(signUpUser.rejected, (state, action)=>{
-        state.loading = false
-        state.error = true
-        state.message = action.payload
-        state.user = null
-      })      
+      .addCase(registerUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = true;
+        state.message = action.payload;
+        state.user = null;
+      });      
     // login user
      
   },
 });
 
-export const { addToken, addUser, logout } = userSlice.actions
+export const { reset } = userSlice.actions
 export default userSlice.reducer
