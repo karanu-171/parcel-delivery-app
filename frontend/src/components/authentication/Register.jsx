@@ -18,16 +18,16 @@ function Register() {
   const navigate = useNavigate();
   const { user, loading, error} = useSelector(state => state.user);
 
-  useEffect(()=>{
-    if(error) {
-      toast.error(message)
-    }
-    if(success || user) {
-      navigate('/')
-    }
-    dispatch(reset())
+  // useEffect(()=>{
+  //   if(error) {
+  //     toast.error(message)
+  //   }
+  //   if(success || user) {
+  //     navigate('/')
+  //   }
+  //   dispatch(reset())
 
-  },[user, error, success, message, navigate, dispatch])
+  // },[user, error, navigate, dispatch])
 
   function convertToBase64(file){
     return new Promise((resolve, reject) =>{
@@ -72,9 +72,8 @@ function Register() {
           <Form style={{ width: "80%", maxWidth: 500 }} onSubmit={handleSignup}>
             <h1 className="text-center"> Create Account</h1>
             <div className="signup-profile-pic__container">
-              <img src={imagePreview || bot} className="signup-profile-pic" />
               <label htmlFor="image-upload" className="image-upload-label">
-                <img src="" alt=""/>
+              <img src={bot} className="signup-profile-pic" />
               </label>
               <input
                 type="file"
@@ -125,7 +124,7 @@ function Register() {
             </Form.Group>
 
             <Button variant="primary" type="submit">
-              {uploadingImg ? "signing you up" : "Signup"}
+             submit
             </Button>
             <div className="py-4">
               <p>
@@ -134,7 +133,9 @@ function Register() {
             </div>
           </Form>
         </Col>
-        <Col md={5} className="signup__bg"></Col>
+        <Col md={5} className="signup__bg">
+
+        </Col>
       </Row>
     </Container>
   );

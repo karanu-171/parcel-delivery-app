@@ -33,9 +33,9 @@ const Header = () => {
                 <Nav.Link as={Link} to={"/contact"} className="text-white">
                   Contact
                 </Nav.Link>
-                <button className="btn text-white" onClick={logout}>
-                  logout
-                </button>
+                <Nav.Link as={Link} to={"/login"} className="text-white">
+                  Login
+                </Nav.Link>
                 <NavDropdown title="john" id="basic-nav-dropdown">
                   <NavDropdown.Item as={Link} to={"/profile"}>
                     My Profile
@@ -58,9 +58,10 @@ const Header = () => {
                 <Nav.Link as={Link} to={"/contact"} className="text-white">
                   Contact
                 </Nav.Link>
-                <Nav.Link as={Link} to={"/login"} className="text-white">
-                  Login
-                </Nav.Link>
+
+                <button className="btn text-white" onClick={logout}>
+                  logout
+                </button>
               </>
             )}
           </Nav>

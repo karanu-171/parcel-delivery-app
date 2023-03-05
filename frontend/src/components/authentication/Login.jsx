@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./auth.css"
 import profile from "../../images/profile-icon.png";
@@ -7,59 +7,63 @@ import profile from "../../images/profile-icon.png";
 const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+
+  
     
 
   const loginSubmit = (e) => {
     e.preventDefault();
   };
   return (
-    <div className="Login">
-      <div className="main">
-        <div>
-          <div className="image">
-            <div className="cont-image">
-              <img src={profile} alt="profile" className="prof-pic" />
+    <Container>
+      <Row>
+        <Col md={5} className="login__bg"></Col>
+        <Col
+          md={7}
+          className="d-flex align-items-center justify-content-center flex-direction-column"
+        >
+          <Form style={{ width: "80%", maxWidth: 500 }} onSubmit={loginSubmit}>
+            <div className="image">
+              <div className="cont-image">
+                <img src={profile} alt="profile" className="prof-pic" />
+              </div>
             </div>
-          </div>
-          <div>
-            <h3>Login Page</h3>
-            <form onSubmit={loginSubmit}>
-              <div className="first-input">
-                <input
-                  type="text"
-                  name="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter email"
-                  className="form-control"
-                />
-              </div>
-              <div className="second-input">
-                <input
-                  type="password"
-                  name="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="password"
-                  className="form-control"
-                />
-              </div>
-              <div className="login-button">
-                <Button type="submit" variant="primary">
-                  Login
-                </Button>
-              </div>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <Form.Text className="text-muted">
+                We'll never share your email with anyone else.
+              </Form.Text>
+            </Form.Group>
 
-              <div className="mt-3">
-                <Link to="/register" className="text-decoration-none text-black">
-                  Don't have an Account? Sign Up
-                </Link>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Button variant="primary" type="submit">
+              login
+            </Button>
+            <div className="py-4">
+              <p>
+                Don't have an account ? <Link to="/register" className="text-decoration-none">SignUp</Link>
+              </p>
+            </div>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

@@ -26,8 +26,11 @@ const registerUser = async (req,res) =>{
 
             user.password = await bcrypt.hash(user.password, salt);
             const result = await user.save()
+
+            // generate token
+            const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET)
         
-        return  res.status(200).json({message:  result})
+        return  res.status(200).json({message:  result, token})
     } catch (error) {
         console.log(error)
     }
@@ -37,16 +40,25 @@ const loginUser = async (req, res) => {
     const { email, password } = req.body
 
     try {
-         let existingUser = await User.findOne({email: email})
-        if(!existingUser){
-            res.status(400).json({message: "user does not exists. signup please"})
-        }else{
-            const comparePassword = bcrypt.compare(password, existingUser.password)
-            if(!comparePassword){
-                res.json({ message: "Invalid Email or Password" });
-            }
+      let existingUser = await User.findOne({ email: email });
+      if (!existingUser) {
+        res
+          .status(400)
+          .json({ message: "user does not exists. signup please" });
+      } else {
+        const comparePassword = bcrypt.compare(password, existingUser.password);
+        if (!comparePassword) {
+          res.json({ message: "Invalid Email or Password" });
         }
-          return  res.status(200).json({message: "successfully logged in", user: existingUser})
+      }
+      // generate token
+      const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
+
+      return res.status(200).json({
+        message: "successfully logged in",
+        user: existingUser,
+        token
+      });
     } catch (error) {
         console.log(error)
     }
@@ -94,6 +106,8 @@ const deleteUser = async (req, res) => {
       console.log(error);
     }
 };
+
+
 
 module.exports = {
     registerUser,
