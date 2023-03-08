@@ -5,8 +5,20 @@ import "./auth.css"
 import profile from "../../images/profile-icon.png";
 
 const Login = () => {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  
+  const [formData, setFormData] = useState({
+    email: "",
+    password: ""
+  });
+
+  const {  email, password } = formData
+
+  const loginChange = (e) =>{
+    setFormData((prevState) =>({
+      ...prevState,
+      [e.target.name] : e.target.value
+    }))
+  }
 
   
     
@@ -33,8 +45,9 @@ const Login = () => {
               <Form.Control
                 type="email"
                 placeholder="Enter email"
+                name="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={loginChange}
                 required
               />
               <Form.Text className="text-muted">
@@ -47,8 +60,9 @@ const Login = () => {
               <Form.Control
                 type="password"
                 placeholder="Password"
+                name="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={loginChange}
                 required
               />
             </Form.Group>

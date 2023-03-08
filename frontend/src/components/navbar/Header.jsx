@@ -8,9 +8,11 @@ const Header = () => {
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const user = useSelector((state) => state.user)
-  const logout = () =>{
-
+  const {user} = useSelector((state) => state.user)
+  const onLogout = () =>{
+    dispatch(logout());
+    dispatch(reset())
+    navigate('/')
   }
   return (
     <Navbar bg="primary" expand="lg" variant="dark">
@@ -33,15 +35,14 @@ const Header = () => {
                 <Nav.Link as={Link} to={"/contact"} className="text-white">
                   Contact
                 </Nav.Link>
-                <Nav.Link as={Link} to={"/login"} className="text-white">
-                  Login
-                </Nav.Link>
-                <NavDropdown title="john" id="basic-nav-dropdown">
+                <NavDropdown title={user.userName} id="basic-nav-dropdown">
                   <NavDropdown.Item as={Link} to={"/profile"}>
                     My Profile
                   </NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item>Logout</NavDropdown.Item>
+                  <button className="btn text-black" onClick={onLogout}>
+                    logout
+                  </button>
                 </NavDropdown>
               </>
             ) : (
@@ -58,10 +59,9 @@ const Header = () => {
                 <Nav.Link as={Link} to={"/contact"} className="text-white">
                   Contact
                 </Nav.Link>
-
-                <button className="btn text-white" onClick={logout}>
-                  logout
-                </button>
+                <Nav.Link as={Link} to={"/login"} className="text-white">
+                  Login
+                </Nav.Link>
               </>
             )}
           </Nav>

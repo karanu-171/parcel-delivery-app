@@ -1,4 +1,4 @@
-import {configureStore, createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import userService from './userService';
 
 const user  = JSON.parse(localStorage.getItem("user"))
@@ -13,7 +13,7 @@ const initialState = {
 
 export const registerUser = createAsyncThunk("registerUser", async (user, thunkAPI) => {
   try {
-    return await authService.register(user)
+    return await userService.register(user)
   } catch (error) {
     const message = (error.response && error.response.data && error.response.data.message)
     || error.message || error.toString()
@@ -23,7 +23,7 @@ export const registerUser = createAsyncThunk("registerUser", async (user, thunkA
 
 export const loginUser = createAsyncThunk("loginUser", async (user, thunkAPI) => {
   try {
-    return await authService.login(user);
+    return await userService.login(user);
   } catch (error) {
     const message =
     (error.response && error.response.data && error.response.data.message) ||
@@ -33,7 +33,7 @@ export const loginUser = createAsyncThunk("loginUser", async (user, thunkAPI) =>
   }
 });
 
-export const logout = createAsyncThunk("logout", async (user, thunkAPI) => {
+export const logout = createAsyncThunk("logout", async () => {
   await authService.logout()
 })
 
@@ -66,9 +66,26 @@ const userSlice = createSlice({
         state.error = true;
         state.message = action.payload;
         state.user = null;
-      });      
-    // login user
-     
+      })
+      // login user
+      .addCase(loginUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.user = action.payload;
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = true;
+        state.message = action.payload;
+        state.user = null;
+      })
+      // logout
+      .addCase(logout.fulfilled, (state) => {
+        state.user = null;
+      })
   },
 });
 

@@ -1,10 +1,11 @@
 const User = require('../models/userModel')
 const jwt = require('jsonwebtoken')
 const bcrypt = require("bcrypt")
-const cloudinary = require('../utils/cloudinary')
+// const cloudinary = require('../utils/cloudinary')
 
 const registerUser = async (req,res) =>{
     const {picture, userName, email, phoneNumber, password} = req.body
+    console.log(req.body)
 
     try {
         let existingUser = await User.findOne({email: email})
@@ -30,7 +31,7 @@ const registerUser = async (req,res) =>{
             // generate token
             const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET)
         
-        return  res.status(200).json({message:  result, token})
+        return  res.status(200).json({_id: user.id, userName, email, phoneNumber, token})
     } catch (error) {
         console.log(error)
     }

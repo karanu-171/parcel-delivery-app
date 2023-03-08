@@ -6,6 +6,7 @@ import App from './App'
 import { store } from './components/redux/store'
 import './index.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import "react-toastify/dist/ReactToastify.css"
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
