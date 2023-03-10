@@ -1,31 +1,60 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { login, reset } from "../features/user/userSlice";
 import "./auth.css"
 import profile from "../../images/profile-icon.png";
+import Spinner from '../pages/Spinner'
 
 const Login = () => {
   
-  const [formData, setFormData] = useState({
+  const [loginData, setLoginData] = useState({
     email: "",
     password: ""
   });
 
-  const {  email, password } = formData
+  const {  email, password } = loginData
+  
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { user, loading, success, error, message } = useSelector(
+    (state) => state.user
+  );
+
+
+  useEffect(() => {
+    if (error) {
+      toast.error(message);
+    }
+    if (success || user) {
+      navigate("/");
+    }
+    dispatch(reset());
+  }, [user, error, success, navigate, dispatch]);
 
   const loginChange = (e) =>{
-    setFormData((prevState) =>({
+    setLoginData((prevState) =>({
       ...prevState,
       [e.target.name] : e.target.value
     }))
   }
 
   
-    
-
   const loginSubmit = (e) => {
     e.preventDefault();
+    //login the user
+      const user = { email, password };
+      dispatch(login(user));
+      console.log(user);
   };
+
+  if (loading) {
+    return <Spinner />;
+  }
+
   return (
     <Container>
       <Row>
@@ -40,7 +69,7 @@ const Login = () => {
                 <img src={profile} alt="profile" className="prof-pic" />
               </div>
             </div>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Group className="mb-3">
               <Form.Label>Email address</Form.Label>
               <Form.Control
                 type="email"
@@ -48,14 +77,13 @@ const Login = () => {
                 name="email"
                 value={email}
                 onChange={loginChange}
-                required
               />
               <Form.Text className="text-muted">
                 We'll never share your email with anyone else.
               </Form.Text>
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Group className="mb-3">
               <Form.Label>Password</Form.Label>
               <Form.Control
                 type="password"
@@ -63,7 +91,6 @@ const Login = () => {
                 name="password"
                 value={password}
                 onChange={loginChange}
-                required
               />
             </Form.Group>
             <Button variant="primary" type="submit">

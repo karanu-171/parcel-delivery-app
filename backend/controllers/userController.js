@@ -5,7 +5,6 @@ const bcrypt = require("bcrypt")
 
 const registerUser = async (req,res) =>{
     const {picture, userName, email, phoneNumber, password} = req.body
-    console.log(req.body)
 
     try {
         let existingUser = await User.findOne({email: email})
@@ -31,7 +30,7 @@ const registerUser = async (req,res) =>{
             // generate token
             const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET)
         
-        return  res.status(200).json({_id: user.id, userName, email, phoneNumber, token})
+        return  res.status(200).json({user: result, token})
     } catch (error) {
         console.log(error)
     }
@@ -53,10 +52,9 @@ const loginUser = async (req, res) => {
         }
       }
       // generate token
-      const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
+      const token = jwt.sign({ _id: existingUser._id }, process.env.JWT_SECRET);
 
       return res.status(200).json({
-        message: "successfully logged in",
         user: existingUser,
         token
       });

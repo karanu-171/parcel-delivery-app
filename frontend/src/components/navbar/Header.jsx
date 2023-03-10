@@ -35,7 +35,7 @@ const Header = () => {
                 <Nav.Link as={Link} to={"/contact"} className="text-white">
                   Contact
                 </Nav.Link>
-                <NavDropdown title={user.userName} id="basic-nav-dropdown">
+                <NavDropdown title={user.user.userName} id="basic-nav-dropdown">
                   <NavDropdown.Item as={Link} to={"/profile"}>
                     My Profile
                   </NavDropdown.Item>

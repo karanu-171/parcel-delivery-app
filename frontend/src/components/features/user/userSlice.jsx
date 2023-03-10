@@ -21,14 +21,14 @@ export const registerUser = createAsyncThunk("registerUser", async (user, thunkA
   }
 });
 
-export const loginUser = createAsyncThunk("loginUser", async (user, thunkAPI) => {
+export const login = createAsyncThunk("user/login", async (userData, thunkAPI) => {
   try {
-    return await userService.login(user);
+    return await userService.login(userData);
   } catch (error) {
     const message =
-    (error.response && error.response.data && error.response.data.message) ||
-    error.message ||
-    error.toString();
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
     return thunkAPI.rejectWithValue(message);
   }
 });
@@ -68,15 +68,15 @@ const userSlice = createSlice({
         state.user = null;
       })
       // login user
-      .addCase(loginUser.pending, (state) => {
+      .addCase(login.pending, (state) => {
         state.loading = true;
       })
-      .addCase(loginUser.fulfilled, (state, action) => {
+      .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
         state.user = action.payload;
       })
-      .addCase(loginUser.rejected, (state, action) => {
+      .addCase(login.rejected, (state, action) => {
         state.loading = false;
         state.error = true;
         state.message = action.payload;
@@ -85,7 +85,7 @@ const userSlice = createSlice({
       // logout
       .addCase(logout.fulfilled, (state) => {
         state.user = null;
-      })
+      });
   },
 });
 

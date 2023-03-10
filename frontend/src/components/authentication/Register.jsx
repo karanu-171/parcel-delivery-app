@@ -35,7 +35,7 @@ function Register() {
     }
     dispatch(reset())
 
-  },[user, error, navigate, dispatch])
+  },[user, error, success, navigate, dispatch])
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -57,7 +57,6 @@ function Register() {
     reader.readAsDataURL(file);
     reader.onloadend = () => {
       setPicture(reader.result);
-      console.log(reader)
     };
   };
 
@@ -75,8 +74,8 @@ function Register() {
     }
   };
 
-  if(loading) {
-    return <Spinner/>
+  if (loading) {
+    return <Spinner />;
   }
 
   return (
