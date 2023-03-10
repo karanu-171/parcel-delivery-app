@@ -3,6 +3,7 @@ const cors = require('cors')
 const connectDb = require('./config/db')
 const userRoutes = require('./routes/userRoutes')
 const parcelRoutes = require('./routes/parcelRoutes')
+const contactRoutes = require('./routes/contactRoutes')
 
 // connect to db
 connectDb();
@@ -16,6 +17,7 @@ require('dotenv').config();
 
 app.use('/user', userRoutes)
 app.use('/parcel', parcelRoutes)
+app.use('/contact', contactRoutes)
 
 const port = process.env.PORT || 4000
 

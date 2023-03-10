@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
+import { Button } from "react-bootstrap";
+import { saveContact, reset } from '../features/contact/contactSlice';
 import './pages.css';
-import { useDispatch } from "react-redux";
-import { Button, Modal} from "react-bootstrap";
 
 const Contact = () => {
 
@@ -10,17 +13,38 @@ const Contact = () => {
   const [subject, setSubject] = useState("")
   const [message, setMessage] = useState("")
 
-  // const dispatch = useDispatch();
+  const contact = useSelector(
+    (state) => state.contact
+  );
 
-  
+  console.log(contact)
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   if (error) {
+  //     toast.error(messages);
+  //   }
+  //   if (success || contact) {
+  //     navigate("/");
+  //   }
+  //   dispatch(reset());
+  // }, [contact, error, success, navigate, dispatch]);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // if (contactData !== "") {
-    //   dispatch(saveContact(contactData));
-    // }
-    setContactData(v);
+    const contactData = { userName, email, subject, message}
+    console.log(contactData)
+
+    dispatch(saveContact(contactData));
   };
+
+  // if (loading) {
+  //   return <Spinner />;
+  // }
+
   return (
     <div className="Contact">
       <div className="container-fluid">
@@ -30,13 +54,13 @@ const Contact = () => {
         <div className="row">
           <div className="col-md-7 shadow rounded p-5">
             <div className="mb-3">
-              <label className="form-label">First Name</label>
+              <label className="form-label">user name</label>
               <input
-                name="firstName"
+                name="userName"
                 type="text"
                 value={userName}
                 className="form-control"
-                placeholder="first name"
+                placeholder="user name"
                 onChange={(e) => setUserName(e.target.value)}
               />
             </div>
