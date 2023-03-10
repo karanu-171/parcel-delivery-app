@@ -4,16 +4,30 @@ import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { Button } from "react-bootstrap";
 import { saveContact, reset } from '../features/contact/contactSlice';
+import Spinner from '../pages/Spinner'
 import './pages.css';
 
 const Contact = () => {
 
-  const [userName, setUserName] = useState("")
-  const [email, setEmail] = useState("")
-  const [subject, setSubject] = useState("")
-  const [message, setMessage] = useState("")
+  const [contactData, setContactData] = useState({
+    userName: "",
+    email: "",
+    subject: "",
+    message: ""
+  });
 
-  const contact = useSelector(
+  
+  let v = {
+    userName: "",
+    email: "",
+    subject: "",
+    message: "",
+  };
+ 
+
+  const { userName, email, subject, message } = contactData
+
+  const { contact, loading, success, error, messages } = useSelector(
     (state) => state.contact
   );
 
@@ -22,28 +36,33 @@ const Contact = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (error) {
-  //     toast.error(messages);
-  //   }
-  //   if (success || contact) {
-  //     navigate("/");
-  //   }
-  //   dispatch(reset());
-  // }, [contact, error, success, navigate, dispatch]);
+  useEffect(() => {
+    if (error) {
+      toast.error(messages);
+    }
+    if (success || contact) {
+      setContactData(v);
+    }
+    dispatch(reset());
+  }, [contact, error, success, navigate, dispatch]);
 
+  const contactChange = (e) => {
+    setContactData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const contactData = { userName, email, subject, message}
-    console.log(contactData)
-
-    dispatch(saveContact(contactData));
+    if (contactData !== "") {
+      dispatch(saveContact(contactData));
+    }
   };
 
-  // if (loading) {
-  //   return <Spinner />;
-  // }
+  if (loading) {
+    return <Spinner />;
+  }
 
   return (
     <div className="Contact">
@@ -61,7 +80,7 @@ const Contact = () => {
                 value={userName}
                 className="form-control"
                 placeholder="user name"
-                onChange={(e) => setUserName(e.target.value)}
+                onChange={contactChange}
               />
             </div>
             <div className="mb-3">
@@ -72,7 +91,7 @@ const Contact = () => {
                 value={email}
                 className="form-control"
                 placeholder="name@gmail.com"
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={contactChange}
               />
             </div>
             <div className="mb-3">
@@ -83,7 +102,7 @@ const Contact = () => {
                 value={subject}
                 className="form-control"
                 placeholder="subject"
-                onChange={(e) => setSubject(e.target.value)}
+                onChange={contactChange}
               />
             </div>
             <div className="mb-3">
@@ -94,7 +113,7 @@ const Contact = () => {
                 className="form-control"
                 placeholder="write your message"
                 rows="3"
-                onChange={(e) => setMessage(e.target.value)}
+                onChange={contactChange}
               ></textarea>
             </div>
 

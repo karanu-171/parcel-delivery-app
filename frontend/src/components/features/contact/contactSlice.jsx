@@ -3,8 +3,7 @@ import contactService from "./contactService";
 
 
 const initialState = {
-  contact: {},
-  contacts: [],
+  contact: [],
   loading: false,
   success: false,
   error: false,
@@ -77,7 +76,7 @@ const contactSlice = createSlice({
       .addCase(saveContact.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
-        state.contact.push(action.payload)
+        state.contact = [action.payload]
       })
       .addCase(saveContact.rejected, (state, action) => {
         state.loading = false;
