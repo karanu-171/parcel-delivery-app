@@ -26,10 +26,6 @@ const parcelSchema = mongoose.Schema({
     required: true,
     ref: "User"
   },
-  isUpdated: {
-    type: Boolean,
-    default: false,
-  },
   isSent: {
     type: Boolean,
     default: false,
