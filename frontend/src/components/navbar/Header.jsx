@@ -32,9 +32,6 @@ const Header = () => {
                 <Nav.Link as={Link} to={"/parcel"} className="text-white">
                   parcel
                 </Nav.Link>
-                <Nav.Link as={Link} to={"/contact"} className="text-white">
-                  Contact
-                </Nav.Link>
                 <NavDropdown title={user.user.userName} id="basic-nav-dropdown">
                   <NavDropdown.Item as={Link} to={"/profile"}>
                     My Profile
@@ -55,9 +52,6 @@ const Header = () => {
                 </Nav.Link>
                 <Nav.Link as={Link} to={"/parcel"} className="text-white">
                   parcel
-                </Nav.Link>
-                <Nav.Link as={Link} to={"/contact"} className="text-white">
-                  Contact
                 </Nav.Link>
                 <Nav.Link as={Link} to={"/login"} className="text-white">
                   Login
