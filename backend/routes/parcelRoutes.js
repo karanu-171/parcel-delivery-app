@@ -9,11 +9,11 @@ const {
 
 const parcelRoutes = express.Router();
 
-parcelRoutes.post("/register", saveParcel);
+parcelRoutes.post("/save", saveParcel);
 parcelRoutes.get("/:id", getParcel);
 parcelRoutes.get("/", getAllParcels);
 parcelRoutes.put("/:id", updateParcel);
 parcelRoutes.delete("/:id", deleteParcel);
 
 
-module.exports = parcelRoutes
+module.exports = parcelRoutes;

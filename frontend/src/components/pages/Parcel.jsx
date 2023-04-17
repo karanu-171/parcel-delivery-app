@@ -13,6 +13,8 @@ const Parcel = () => {
     description: "",
     senderName: "",
     receiverName: "",
+    senderNumber: "",
+    receiverNumber: "",
     startLocation: "",
     endLocation: ""
   });
@@ -25,7 +27,7 @@ const Parcel = () => {
     senderNumber: "",
     receiverNumber: "",
     startLocation: "",
-    endLocation: "",
+    endLocation: ""
   };
  
 

@@ -1,7 +1,6 @@
 const User = require('../models/userModel')
 const jwt = require('jsonwebtoken')
 const bcrypt = require("bcrypt")
-// const cloudinary = require('../utils/cloudinary')
 
 const registerUser = async (req,res) =>{
     const {picture, userName, email, phoneNumber, password} = req.body
@@ -11,9 +10,6 @@ const registerUser = async (req,res) =>{
         if(existingUser){
             res.status(400).json({message: "user already exists"})
         }
-        // const pic = await cloudinary.uploader.upload(picture, {
-        //     folder: users,
-        // })
 
             const user  = new User({
                 picture,

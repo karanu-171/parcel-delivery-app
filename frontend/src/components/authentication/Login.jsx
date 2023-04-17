@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { login, reset } from "../features/user/userSlice";
 import "./auth.css"
+import { toast } from 'react-toastify'
 import profile from "../images/profile-icon.png";
 import Spinner from '../pages/Spinner'
 
