@@ -1,10 +1,7 @@
 const mongoose = require('mongoose')
 
 const userSchema = mongoose.Schema({
-  picture: {
-    type: String,
-    required: true,
-  },
+  
   userName: {
     type: String,
     required: true,
@@ -21,8 +18,14 @@ const userSchema = mongoose.Schema({
   password: {
     type: String,
     required: true,
+    minlength: 4,
+    maxlength: 10
   },
   isAdmin: {
+    type: Boolean,
+    default: false,
+  },
+  isVerified: {
     type: Boolean,
     default: false,
   },

@@ -86,20 +86,7 @@ function Register() {
           className="d-flex align-items-center justify-content-center flex-direction-column"
         >
           <Form style={{ width: "80%", maxWidth: 500 }} onSubmit={handleSignup}>
-            <h1 className="text-center"> Create Account</h1>
-            <div className="signup-profile-pic__container">
-              <label htmlFor="image-upload" className="image-upload-label">
-                <img src={bot} className="signup-profile-pic" />
-              </label>
-              <input
-                type="file"
-                id="image-upload"
-                hidden
-                accept=".jpeg, .png, .jpg"
-                name="picture"
-                onChange={(e) => picChange(e)}
-              />
-            </div>
+            <h1 className="text-center mt-3"> Create Account</h1>
             <Form.Group className="mb-3">
               <Form.Label>UserName</Form.Label>
               <Form.Control
