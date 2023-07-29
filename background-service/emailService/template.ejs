@@ -1,3 +1,4 @@
+
 <style type="text/css">
     .header {
         background: #8a8a8a;
@@ -5,6 +6,10 @@
     
     .header .columns {
         padding-bottom: 0;
+    }
+
+    .text-right {
+        font-weight: bold;
     }
     
     .header p {
@@ -31,13 +36,17 @@
     .wrapper.secondary {
         background: #f3f3f3
     }
+    .ul {
+        list-style-type: square; 
+        margin-left: 10px;
+    }
 </style>
 
 <wrapper class="header">
     <container>
         <row class="collapse">
             <columns small="6">
-                <p class="text-right">SendIt</p>
+                <h1 class="text-right">Parcel Hero</h1>
             </columns>
         </row>
     </container>
@@ -47,14 +56,19 @@
     <spacer size="16"></spacer>
     <row>
         <columns small="12">
-            <h1>Hello,
+            <h2>Hello,
                 <%= email %>
-            </h1>
-            <p class="lead">Lorem ipsum dolor sit amet</p>
-            <p>SendIT is a courier service that helps users deliver parcels to different destinations. SendIT provides courier quotes based on weight categories.</p>
+            </h2>
+            <p class="lead">Welcome to Parcel Hero</p>
+            <p>Parcel Hero is a courier service that helps users deliver parcels to different destinations. SendIT provides courier quotes based on weight categories.</p>
             <callout class="primary">
                 <p>Send your parcel in three simple steps</p>
             </callout>
+            <ul class="ul">
+                <li>Create an account</li>
+                <li>Fill in the parcel details:</li>
+                <li>Drop your parcel to yor nearest parcel hero office</li>
+            </ul>
         </columns>
     </row>
     <wrapper class="secondary">
@@ -68,7 +82,7 @@
             <columns large="6">
                 <h5>Contact Info:</h5>
                 <p>Phone: 0702 477 708</p>
-                <p>Email: <a href="karanujohn171@gmail.com">Parcel hero movers</a></p>
+                <p>Email: karanujohn171@gmail.com</p>
             </columns>
         </row>
     </wrapper>

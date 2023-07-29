@@ -1,9 +1,11 @@
-function Spinner() {
-  return (
-    <div className="loadingSpinnerContainer">
-      <div className="loadingSpinner"></div>
-    </div>
-  );
+import React from "react"
+import "./pages.css";
+
+
+const Spinner = () => {
+  return(
+    <div className="spinner"></div>
+  )
 }
 
-export default Spinner;
+export default Spinner

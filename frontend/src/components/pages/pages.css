@@ -1,18 +1,4 @@
-.Parcel {
-    background-color: rgb(248, 244, 244);
+.home {
+    height: 100vh;
+    background-color: aqua;
 }
-
-.otp {
-    color: black;
-}
-
-.form-label {
-    color: black;
-}
-
-.img-fluid {
-    border-radius: 10px;
-}
-
-
-

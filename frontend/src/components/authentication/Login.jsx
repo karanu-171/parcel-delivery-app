@@ -53,7 +53,7 @@ const Login = () => {
   };
 
   if (loading) {
-    return <Spinner />;
+    return <Spinner/>;
   }
 
   return (

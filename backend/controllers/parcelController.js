@@ -1,6 +1,33 @@
 
 
-const saveParcel = async (req, res) => {};
+const saveParcel = async (req, res) => {
+  const {userName, email, phoneNumber, password} = req.body
+
+    try {
+        let existingUser = await User.findOne({email: email})
+        if(existingUser){
+            res.status(400).json({message: "user already exists"})
+        }
+
+            const user  = new User({
+                userName,
+                email,
+                phoneNumber,
+                password
+            });
+            const salt = await bcrypt.genSalt(10);
+
+            user.password = await bcrypt.hash(user.password, salt);
+            const result = await user.save()
+
+            // generate token
+            const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET)
+        
+        return  res.status(200).json({user: result, token})
+    } catch (error) {
+        console.log(error)
+    }
+};
 
 const getParcel = async (req, res) => {
   const parcelId = req.params.id

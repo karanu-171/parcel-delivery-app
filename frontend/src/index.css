@@ -1,5 +1,5 @@
 
-.loadingSpinnerContainer {
+/* .loadingSpinnerContainer {
   position: fixed;
   top: 0;
   right: 0;
@@ -19,4 +19,36 @@
   border-color: #000 transparent #555 transparent;
   border-radius: 50%;
   animation: spin 1.2s linear infinite;
+} */
+
+.Parcel {
+  background-color: rgb(248, 244, 244);
 }
+
+.otp {
+  color: black;
+}
+
+.form-label {
+  color: black;
+}
+
+.img-fluid {
+  border-radius: 10px;
+}
+
+.spinner {
+  height: 120px;
+  width: 120px;
+  border: 6px solid;
+  border-color: white transparent white transparent;
+  border-radius: 50%;
+  animation: spin 1.3s linear infinite;
+}
+
+@keyframes spin {
+  to {
+      transform: rotate(360deg)
+  }
+}
+

@@ -9,7 +9,7 @@ import { registerUser, reset } from '../features/user/userSlice'
 import Spinner from "../pages/Spinner";
 
 function Register() {
-  const [picture, setPicture]= useState('')
+  // const [picture, setPicture]= useState('')
   const [formData, setFormData] = useState({
     userName: "",
     email: "",
@@ -46,19 +46,19 @@ function Register() {
 
   
 
-  const picChange = async (e) => {
-    const file = e.target.files[0];
-    set(file);
-    console.log(file);
-  };
+  // const picChange = async (e) => {
+  //   const file = e.target.files[0];
+  //   set(file);
+  //   console.log(file);
+  // };
 
-  const set = (file) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setPicture(reader.result);
-    };
-  };
+  // const set = (file) => {
+  //   const reader = new FileReader();
+  //   reader.readAsDataURL(file);
+  //   reader.onloadend = () => {
+  //     setPicture(reader.result);
+  //   };
+  // };
 
  
 
@@ -68,14 +68,14 @@ function Register() {
     if(password !== confirmPassword){
       toast.error('passwords do not match')
     }else {
-      const user = {picture, userName, email, phoneNumber, password}
+      const user = { userName, email, phoneNumber, password}
       dispatch(registerUser(user));
       console.log(user)
     }
   };
 
   if (loading) {
-    return <Spinner />;
+    return <Spinner/>;
   }
 
   return (
